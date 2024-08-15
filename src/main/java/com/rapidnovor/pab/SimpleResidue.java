@@ -1,4 +1,4 @@
-package com.rnipb.pab;
+package com.rapidnovor.pab;
 
 public enum SimpleResidue {
     A("Alanine", "Ala", "C3H5NO", 71.037113787),

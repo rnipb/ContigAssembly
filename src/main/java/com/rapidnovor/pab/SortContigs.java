@@ -1,4 +1,4 @@
-package com.rnipb.pab;
+package com.rapidnovor.pab;
 
 import java.io.*;
 import java.util.*;

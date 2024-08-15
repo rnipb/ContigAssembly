@@ -1,7 +1,7 @@
-package com.rnipb.pab.alignment;
+package com.rapidnovor.pab.alignment;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.*;
+import java.net.URL;
 import java.util.*;
 
 public class PSFMLoader {
@@ -9,9 +9,10 @@ public class PSFMLoader {
     int[][][] cdrRegions;
     int[] kPos;
 
-    public PSFMLoader(String path) {
+    public PSFMLoader() {
+        File psfmParam = getModelFile("human_psfm.txt");
         psfms = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(psfmParam))) {
             String aaList = br.readLine().replace("\n", "");
             String chainType = null;
             List<Map<Character, Double>> aaRelativeEntropyMatrix = new ArrayList<>();
@@ -76,5 +77,33 @@ public class PSFMLoader {
 
     public int[] getkPos() {
         return kPos;
+    }
+
+    private static File getModelFile(String resourceName) {
+        try {
+            URL url = PSFMLoader.class.getResource(resourceName);
+            if (url == null) {
+                System.out.println("No input species in database.");
+            }
+            String type = url.getProtocol();
+            if ("file".equals(type)) {
+                return new File(url.toURI());
+            }
+            if ("jar".equals(type)) {
+                File file = File.createTempFile("psfm", null);
+                file.deleteOnExit();
+                InputStream in = PSFMLoader.class.getResourceAsStream(resourceName);
+                OutputStream out = new FileOutputStream(file);
+                byte[] bytes = new byte[8192];
+                int nBytes;
+                while ((nBytes = in.read(bytes)) > 0) {
+                    out.write(bytes, 0, nBytes);
+                }
+                return file;
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return new File(resourceName);
     }
 }

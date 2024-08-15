@@ -1,4 +1,4 @@
-package com.rnipb.pab.alignment;
+package com.rapidnovor.pab.alignment;
 
 /**
  * an object stores a PFSM alignment result

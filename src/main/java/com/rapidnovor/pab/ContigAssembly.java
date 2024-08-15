@@ -1,6 +1,6 @@
-package com.rnipb.pab;
+package com.rapidnovor.pab;
 
-import com.rnipb.pab.alignment.*;
+import com.rapidnovor.pab.alignment.*;
 
 import java.io.*;
 import java.util.*;
@@ -20,14 +20,12 @@ public class ContigAssembly {
 
     public static void main(String[] args) throws IOException {
         String denovoRoot = args[0]; // path of a folder that has all de novo result files
-        String psfmPath = args[1]; // a parameter file for PSFM, used for sequence alignment
-        String denovoFileSuffix = args[2]; // suffix of de novo files, all files with the suffix in denovoRoot will be used
-        PSFMLoader psfmLoader = new PSFMLoader(psfmPath);
+        String denovoFileSuffix = args[1]; // suffix of de novo files, all files with the suffix in denovoRoot will be used
+        PSFMLoader psfmLoader = new PSFMLoader();
         ContigAssembly inst = new ContigAssembly(denovoRoot, psfmLoader, denovoFileSuffix);
         List<String[]> sequences = inst.overlap(); // find overlap between De Novo peptides to build longer sequences, output results in contigs.fasta
-        writeFasta(sequences, new File(denovoRoot, "contigs.fasta")); //output contigs to contigs.fasta
         List<String[]> filtered = inst.filterSequences(sequences);// filter out unlikely sequences based on similarity to germline
-        writeFasta(filtered, new File(denovoRoot, "contigs_fil.fasta")); //output filtered results to contig_fil.fasta
+        writeFasta(filtered, new File(denovoRoot, "contigs.fasta")); //output filtered results to contig_fil.fasta
     }
 
     public ContigAssembly(String denovoRoot, PSFMLoader psfmLoader, String denovoFileSuffix) throws IOException {

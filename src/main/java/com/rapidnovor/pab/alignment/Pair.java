@@ -1,4 +1,4 @@
-package com.rnipb.pab.alignment;
+package com.rapidnovor.pab.alignment;
 
 import java.io.Serializable;
 
