@@ -1,0 +1,13 @@
+1. Build contig sequences from De Novo peptides
+Java Main com.rnipb.pab.ContigAssembly
+param1: path to a folder including all De Novo csv files
+param2: path to a psfm matrix txt file
+param3: suffix of De Novo csv files ("novorai.csv" in example cases)
+
+2. Use novor.cloud to search the config_fil.fasta generated above
+
+3. Sort contigs
+Java Main com.rnipb.pab.SortContigs
+param1: a folder path contains:
+a. contigs_fil.fasta from ContigAssembly.java,
+b. proteins.csv, proPepLinks.txt, psms.csv from novor.cloud searched with contigs_fil.fasta
